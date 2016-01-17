@@ -1,0 +1,15 @@
+<div class="n__c--i-oscillator__container">
+  {{control/i-knob onTurn=(action "update" "gain") label="gain" value=gain max=1 min=0 sensitivity=0.75}}
+</div>
+<div class="n__c--i-oscillator__container">
+  <div class="n__c--i-oscillator__playing" data-active={{playing}}></div>
+  <div class="n__c--i-oscillator__pitch">
+    <span class="n__c--i-oscillator__pitch__note">
+      <span class="n__c--i-oscillator__pitch__note__letter">{{note}}</span>
+      <span class="n__c--i-oscillator__pitch__note__octave">{{octave}}</span>
+    </span>
+    {{#if frequency}}
+      <span class="n__c--i-oscillator__pitch__frequency">{{frequency}}Hz</span>
+    {{/if}}
+  </div>
+</div>
