@@ -41,8 +41,8 @@ export default class {
     }
   }
 
-  swipe (update) {
-
+  swipe (/*update*/) {
+    throw new Error('swipe not implemented');
   }
 
   __updateNote (offset) {

@@ -9,10 +9,12 @@ export function pipeMouseEvent({ source, destination, context }) {
   source.addEventListener('click', transferEvent);
   source.addEventListener('mousedown', transferEvent);
 
-  context.on('willRemoveElement', function () {
-    source.removeEventListener('click', transferEvent);
-    source.removeEventListener('mousedown', transferEvent);
-  });
+  if (context != null) {
+    context.on('willRemoveElement', function () {
+      source.removeEventListener('click', transferEvent);
+      source.removeEventListener('mousedown', transferEvent);
+    });
+  }
 }
 
 

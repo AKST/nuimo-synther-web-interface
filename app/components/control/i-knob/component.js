@@ -67,7 +67,7 @@ export default Ember.Component.extend({
       const sensitivity = this.get('sensitivity');
       const { screenX: x, screenY: y } = window.event;
 
-      const release = event => {
+      const release = () => {
         window.removeEventListener('mouseup', release);
         window.removeEventListener('mousemove', move);
       };

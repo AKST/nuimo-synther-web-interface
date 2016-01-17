@@ -38,7 +38,7 @@ export default class Monotron {
     lfo.connect(lfoGain);
     lfoGain.connect(osc.frequency);
 
-    output.gain.value = 0
+    output.gain.value = 0;
     osc.type = 'sawtooth';
     lfo.type = 'sawtooth';
     osc.start(context.currentTime);

@@ -1,5 +1,5 @@
 export function frequency (n) {
-  const twenthRootOfTwo = Math.pow(2, 1 / 12)
+  const twenthRootOfTwo = Math.pow(2, 1 / 12);
   const A4Pos = 49;
   const A4hz = 440;
   return Math.pow(twenthRootOfTwo, n - A4Pos) * A4hz;
