@@ -1,3 +1,15 @@
+
+
+const notes = [
+  'A', 'A#', 'B', 'C', 'C#', 'D',
+  'D#', 'E', 'F', 'F#', 'G', 'G#'
+];
+
+
+export function noteIndex(index) {
+  return notes[index < 0 ? 12 - (12 - ((index * -1) % 12)) : index % 12];
+}
+
 export function frequency (n) {
   const twenthRootOfTwo = Math.pow(2, 1 / 12);
   const A4Pos = 49;
@@ -12,4 +24,4 @@ export function noteRepr (n) {
   return { octave, tone, offset };
 }
 
-export default { noteRepr, frequency };
+export default { noteRepr, frequency, noteIndex };

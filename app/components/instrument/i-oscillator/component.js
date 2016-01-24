@@ -1,11 +1,8 @@
 import Ember from 'ember';
+import utils from 'frontend/audio/util';
 import Dialer from 'frontend/nuimo/controls/pitch_modulator';
 import Monotron from 'frontend/audio/synth/monotron';
 
-const notes = [
-  'A', 'A#', 'B', 'C', 'C#', 'D',
-  'D#', 'E', 'F', 'F#', 'G', 'G#'
-];
 
 export default Ember.Component.extend({
   tagName: 'div',
@@ -57,7 +54,7 @@ export default Ember.Component.extend({
       playing: repr.playing,
       frequency: Math.floor((repr.note.pitch * 100)) / 100,
       octave: repr.note.position.octave,
-      note: notes[repr.note.position.tone],
+      note: utils.noteIndex(repr.note.position.tone),
     });
   },
 
