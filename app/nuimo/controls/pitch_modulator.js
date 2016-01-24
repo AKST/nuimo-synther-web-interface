@@ -8,8 +8,17 @@ export default class {
     this.__playing = false;
     this.cap = 1000;
     this.sensitivity = 0.01;
+
+    this.__lfoRate = 0;
+    this.__lfoAmp = 0;
     this.__gain = 1;
+    this.__cutoffFreq = 500;
+    this.__cutoffQ = 0;
   }
+
+  //
+  // ACCESSORS
+  //
 
   get gain () {
     return this.__gain;
@@ -20,6 +29,42 @@ export default class {
       this.__monotron.setGain(level);
     }
   }
+
+  get lfoAmp () {
+    return this.__lfoAmp;
+  }
+  set lfoAmp (amplitude) {
+    this.__lfoAmp = amplitude;
+    this.__monotron.setLFOAmp(amplitude);
+  }
+
+  get lfoRate () {
+    return this.__lfoRate;
+  }
+  set lfoRate (rate) {
+    this.__lfoRate = rate;
+    this.__monotron.setLFORate(rate);
+  }
+
+  get cutoffFreq () {
+    return this.__cutoffFreq;
+  }
+  set cutoffFreq (frequency) {
+    this.__cutoffFreq = frequency;
+    this.__monotron.setCutoffFreq(frequency);
+  }
+
+  get cutoffQ () {
+    return this.__cutoffQ;
+  }
+  set cutoffQ (q) {
+    this.__cutoffQ = q;
+    this.__monotron.setCutoffQ(q);
+  }
+
+  //
+  // VISITOR API
+  //
 
   withUpdate (update) {
     this[update.type](update.repr);
@@ -42,8 +87,12 @@ export default class {
   }
 
   swipe (/*update*/) {
-    throw new Error('swipe not implemented');
+    console.warn('swipe not implemented');
   }
+
+  //
+  // internal API
+  //
 
   __updateNote (offset) {
     this.__note =
@@ -62,6 +111,11 @@ export default class {
       note: {
         position: util.noteRepr(this.__note),
         pitch: util.frequency(this.__note),
+      },
+      preset: {
+        gain: this.__gain,
+        lfoAmp: this.__lfoAmp,
+        lfoRate: this.__lfoRate,
       }
     };
   }

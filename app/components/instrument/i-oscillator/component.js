@@ -22,6 +22,10 @@ export default Ember.Component.extend({
   playing: null,
 
   gain: 0.8,
+  lfoAmp: 0,
+  lfoRate: 54,
+  cutoffFreq: 500,
+  cutoffQ: 0,
 
   _listenForUpdates: Ember.on('willInsertElement', function () {
     const nuimo = this.get('nuimo');
@@ -29,8 +33,15 @@ export default Ember.Component.extend({
     const monotron = Monotron.makeSynth(context);
     const controller = new Dialer(monotron);
 
+    monotron.setLFOTarget('cutoff');
     monotron.connect(context.destination);
+
     controller.gain = this.get('gain');
+    controller.lfoAmp = this.get('lfoAmp');
+    controller.lfoRate = this.get('lfoRate');
+    controller.cutoffQ = this.get('cutoffQ');
+    controller.cutoffFreq = this.get('cutoffFreq');
+
     this.set('controller', controller);
 
     this._updateWithController(controller);
@@ -50,6 +61,10 @@ export default Ember.Component.extend({
     });
   },
 
+  //
+  // ACTIONS
+  //
+
   actions: {
     update (metric, amount) {
       this.set(metric, amount);
@@ -64,5 +79,29 @@ export default Ember.Component.extend({
     const controller = this.get('controller');
     const gain = this.get('gain');
     controller.gain = gain;
+  }),
+
+  trackLFORate: Ember.observer('lfoRate', function () {
+    const controller = this.get('controller');
+    const lfoRate = this.get('lfoRate');
+    controller.lfoRate = lfoRate;
+  }),
+
+  trackLFOAmp: Ember.observer('lfoAmp', function () {
+    const controller = this.get('controller');
+    const lfoAmp = this.get('lfoAmp');
+    controller.lfoAmp = lfoAmp;
+  }),
+
+  trackCutoffFreq: Ember.observer('cutoffFreq', function () {
+    const controller = this.get('controller');
+    const cutoffFreq = this.get('cutoffFreq');
+    controller.cutoffFreq = cutoffFreq;
+  }),
+
+  trackCutoffQ: Ember.observer('cutoffQ', function () {
+    const controller = this.get('controller');
+    const cutoffQ = this.get('cutoffQ');
+    controller.cutoffQ = cutoffQ;
   }),
 });

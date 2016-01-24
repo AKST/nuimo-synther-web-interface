@@ -5,6 +5,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['n__c--i-knob'],
+  classNameBindings: ['classNS'],
+  classNS: '',
 
   label: '???',
 
@@ -21,7 +23,23 @@ export default Ember.Component.extend({
     const el = this.get('element');
     const dial = el.querySelector('.n__c--i-knob__wheel');
     const node = el.querySelector('.n__c--i-knob__value');
+    const label = el.querySelector('.n__c--i-knob__label');
     pipeMouseEvent({ source: node, destination: dial, context: this });
+
+
+    const handler = event => this.startTurning(event);
+    const preventer = e => {
+      e.preventDefault();
+      return false;
+    };
+
+    dial.addEventListener('mousedown', handler, this);
+    label.addEventListener('mousedown', preventer, this);
+    this.on('willRemoveElement', () => {
+      dial.removeEventListener('mousedown', handler);
+      label.removeEventListener('mousedown', preventer);
+    });
+
   }),
 
   _interpolate: Ember.computed('min', 'max', '_minDeg', '_maxDeg', function () {
@@ -58,39 +76,37 @@ export default Ember.Component.extend({
     );
   }),
 
-  actions: {
-    startTurning () {
-      const min = this.get('min');
-      const max = this.get('max');
-      const initialOffset = this.get('value');
-      const rangeMapping = this.get('_rangeMapping');
-      const sensitivity = this.get('sensitivity');
-      const { screenX: x, screenY: y } = window.event;
+  startTurning (event) {
+    const min = this.get('min');
+    const max = this.get('max');
+    const initialOffset = this.get('value');
+    const rangeMapping = this.get('_rangeMapping');
+    const sensitivity = this.get('sensitivity');
+    const { screenX: x, screenY: y } = event;
 
-      const release = () => {
-        window.removeEventListener('mouseup', release);
-        window.removeEventListener('mousemove', move);
-      };
+    const release = () => {
+      window.removeEventListener('mouseup', release);
+      window.removeEventListener('mousemove', move);
+    };
 
-      const move = event => {
-        const { screenX: xd, screenY: yd } = event;
-        const a = x - xd;
-        const b = y - yd;
-        const c = Math.sqrt(a * a + b * b);
-        let update = initialOffset + (c * Math.sign(xd - x) * sensitivity * rangeMapping);
+    const move = event => {
+      const { screenX: xd, screenY: yd } = event;
+      const a = x - xd;
+      const b = y - yd;
+      const c = Math.sqrt(a * a + b * b);
+      let update = initialOffset + (c * Math.sign(xd - x) * sensitivity * rangeMapping);
 
-        if (min != null) {
-          update = Math.max(min, update);
-        }
-        if (max != null) {
-          update = Math.min(max, update);
-        }
+      if (min != null) {
+        update = Math.max(min, update);
+      }
+      if (max != null) {
+        update = Math.min(max, update);
+      }
 
-        this.sendAction('onTurn', update);
-      };
+      this.sendAction('onTurn', update);
+    };
 
-      window.addEventListener('mouseup', release);
-      window.addEventListener('mousemove', move);
-    },
-  }
+    window.addEventListener('mouseup', release);
+    window.addEventListener('mousemove', move);
+  },
 });

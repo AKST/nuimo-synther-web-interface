@@ -1,5 +1,9 @@
-<div class="n__c--i-oscillator__container">
-  {{control/i-knob onTurn=(action "update" "gain") label="gain" value=gain max=1 min=0 sensitivity=0.75}}
+<div class="n__c--i-oscillator__container n__c--i-oscillator__container--knobs">
+  {{control/i-knob classNS="n__c--i-oscillator__knob" onTurn=(action "update" "gain") label="Gain" value=gain min=0 max=1 sensitivity=0.75}}
+  {{control/i-knob classNS="n__c--i-oscillator__knob" onTurn=(action "update" "lfoAmp") label="LFO Amp" value=lfoAmp min=0.5 max=500 sensitivity=0.75}}
+  {{control/i-knob classNS="n__c--i-oscillator__knob" onTurn=(action "update" "lfoRate") label="LFO Rate" value=lfoRate min=0.001 max=400 sensitivity=0.75}}
+  {{control/i-knob classNS="n__c--i-oscillator__knob" onTurn=(action "update" "cutoffFreq") label="Cutoff Freq" value=cutoffFreq min=0.001 max=900 sensitivity=0.75}}
+  {{control/i-knob classNS="n__c--i-oscillator__knob" onTurn=(action "update" "cutoffQ") label="Cutoff Q" value=cutoffQ min=0.001 max=100 sensitivity=0.75}}
 </div>
 <div class="n__c--i-oscillator__container">
   <div class="n__c--i-oscillator__playing" data-active={{playing}}></div>

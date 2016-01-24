@@ -9,9 +9,45 @@ export default class Monotron {
     this.lfoGain = lfoGain;
   }
 
+  //
+  // SETTERS
+  //
+
+  setLFOAmp (level, time = this.context.currentTime) {
+    this.lfoGain.gain.linearRampToValueAtTime(level, time + 0.1);
+  }
+
+  setLFORate (pitch, time = this.context.currentTime) {
+    this.lfo.frequency.setValueAtTime(pitch, time + 0.1);
+  }
+
   setGain (level, time = this.context.currentTime) {
     this.output.gain.linearRampToValueAtTime(level, time + 0.1);
   }
+
+  setCutoffFreq (pitch, time = this.context.currentTime) {
+    this.filter.frequency.setValueAtTime(pitch, time + 0.1);
+  }
+
+  setCutoffQ (pitch, time = this.context.currentTime) {
+    this.filter.Q.setValueAtTime(pitch, time + 0.1);
+  }
+
+  setLFOTarget (target) {
+    this.lfoGain.disconnect();
+    switch (target) {
+      case 'pitch':
+        this.lfoGain.connect(this.osc.frequency);
+        break;
+      case 'cutoff':
+        this.lfoGain.connect(this.filter.frequency);
+        break;
+    }
+  }
+
+  //
+  // METHODS
+  //
 
   play ({ pitch, level, time = this.context.currentTime }) {
     this.osc.frequency.setValueAtTime(pitch, time);
@@ -36,11 +72,10 @@ export default class Monotron {
     osc.connect(filter);
     filter.connect(output);
     lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
 
     output.gain.value = 0;
     osc.type = 'sawtooth';
-    lfo.type = 'sawtooth';
+    lfo.type = 'sine';
     osc.start(context.currentTime);
     lfo.start(context.currentTime);
 

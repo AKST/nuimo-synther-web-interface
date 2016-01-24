@@ -8,6 +8,19 @@
   justify-content: center;
   flex-direction: column;
 
+
+  &__knob + &__knob {
+    padding-left: 2em;
+  }
+
+  &__container--knobs {
+    webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
   &__container {
     font-size: $font-size;
     width: 500px;
