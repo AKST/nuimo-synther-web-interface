@@ -1,9 +1,11 @@
-<div class="n__c--i-knob__container {{classNS}}__container">
-  <div class="n__c--i-knob__wheel {{classNS}}__wheel" style={{wheelStyle}}>
-    <div class="n__c--i-knob__wheel__marker {{classNS}}__wheel__marker"></div>
+<div class={{class-prefixer _ownSuffix classNS suffix="__container"}}>
+  <div class={{class-prefixer _ownSuffix classNS suffix="__wheel"}} style={{wheelStyle}}>
+    <div class={{class-prefixer _ownSuffix classNS suffix="__wheel__marker"}}></div>
   </div>
-  <div class="n__c--i-knob__value {{classNS}}__value">{{round-down value 2}}</div>
-  <div class="n__c--i-knob__label {{classNS}}__label">
+  <div class={{class-prefixer _ownSuffix classNS suffix="__value"}}>
+    {{round-down value 2}}
+  </div>
+  <div class={{class-prefixer _ownSuffix classNS suffix="__label"}}>
     {{label}}
   </div>
 </div>

@@ -6,6 +6,9 @@
   {{control/i-knob classNS="n__c--i-oscillator__knob" onTurn=(action "update" "cutoffQ") label="Cutoff Q" value=cutoffQ min=0.001 max=100 sensitivity=0.75}}
 </div>
 <div class="n__c--i-oscillator__container">
+  {{control/i-select classNS="n__c--i-oscillator" label="LFO Target" options=optionsLFO onSelect=(action "updateLFO")}}
+</div>
+<div class="n__c--i-oscillator__container">
   <div class="n__c--i-oscillator__playing" data-active={{playing}}></div>
   <div class="n__c--i-oscillator__pitch">
     <span class="n__c--i-oscillator__pitch__note">

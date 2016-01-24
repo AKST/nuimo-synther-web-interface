@@ -24,6 +24,17 @@ export default Ember.Component.extend({
   cutoffFreq: 500,
   cutoffQ: 0,
 
+  optionsLFO: null,
+
+  initOptionsLFO: Ember.on('init', function () {
+    this.set('optionsLFO', [
+      { label: 'none',        value: Dialer.LFO_TARGET.NONE },
+      { label: 'cutoff freq', value: Dialer.LFO_TARGET.CUTOFF_F },
+      { label: 'cutoff q',    value: Dialer.LFO_TARGET.CUTOFF_Q },
+      { label: 'frequency',   value: Dialer.LFO_TARGET.FREQUENCY },
+    ]);
+  }),
+
   _listenForUpdates: Ember.on('willInsertElement', function () {
     const nuimo = this.get('nuimo');
     const context = this.get('audio').getContext();
@@ -65,6 +76,11 @@ export default Ember.Component.extend({
   actions: {
     update (metric, amount) {
       this.set(metric, amount);
+    },
+
+    updateLFO (target) {
+      const controller = this.get('controller');
+      controller.lfoTarget = target;
     }
   },
 

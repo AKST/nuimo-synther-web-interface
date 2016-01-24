@@ -1,7 +1,7 @@
 import util from 'frontend/audio/util';
 
 
-export default class {
+export class PitchModulator {
   constructor (monotron) {
     this.__monotron = monotron;
     this.__note = 49;
@@ -62,6 +62,25 @@ export default class {
     this.__monotron.setCutoffQ(q);
   }
 
+  set lfoTarget (value) {
+    switch (value) {
+      case PitchModulator.LFO_TARGET.NONE:
+        this.__monotron.setLFOTarget('none');
+        break;
+      case PitchModulator.LFO_TARGET.CUTOFF_F:
+        this.__monotron.setLFOTarget('cutoff');
+        break;
+      case PitchModulator.LFO_TARGET.CUTOFF_Q:
+        this.__monotron.setLFOTarget('q');
+        break;
+      case PitchModulator.LFO_TARGET.FREQUENCY:
+        this.__monotron.setLFOTarget('pitch');
+        break;
+      default:
+        throw new Error('unknown lfo target');
+    }
+  }
+
   //
   // VISITOR API
   //
@@ -120,3 +139,14 @@ export default class {
     };
   }
 }
+
+
+PitchModulator.LFO_TARGET = {
+  NONE: Symbol(),
+  CUTOFF_F: Symbol(),
+  CUTOFF_Q: Symbol(),
+  FREQUENCY: Symbol(),
+};
+
+
+export default PitchModulator;

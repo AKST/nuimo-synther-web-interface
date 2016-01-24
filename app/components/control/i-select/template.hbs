@@ -1,0 +1,9 @@
+<span class="n__c--control__i-select__label {{classNS}}__i-select__label">{{label}}</span>
+<select class="n__c--control__i-select__select {{classNS}}__i-select__select" onChange={{action 'onSelect'}}>
+  {{#each options as |option index|}}
+    <option class={{class-prefixer "n__c--control" classNS suffix="__i-select__option"}}
+            value={{index}}>
+      {{option.label}}
+    </option>
+  {{/each}}
+</select>

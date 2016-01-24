@@ -4,8 +4,11 @@ import Ember from 'ember';
 
 
 export default Ember.Component.extend({
-  classNames: ['n__c--i-knob'],
+  classNames: ['n__c--control__i-knob'],
   classNameBindings: ['classNS'],
+
+  _ownSuffix: 'n__c--control__i-knob',
+
   classNS: '',
 
   label: '???',
@@ -21,9 +24,9 @@ export default Ember.Component.extend({
 
   makeLabelUnSelectable: Ember.on('willInsertElement', function () {
     const el = this.get('element');
-    const dial = el.querySelector('.n__c--i-knob__wheel');
-    const node = el.querySelector('.n__c--i-knob__value');
-    const label = el.querySelector('.n__c--i-knob__label');
+    const dial = el.querySelector('.n__c--control__i-knob__wheel');
+    const node = el.querySelector('.n__c--control__i-knob__value');
+    const label = el.querySelector('.n__c--control__i-knob__label');
     pipeMouseEvent({ source: node, destination: dial, context: this });
 
 

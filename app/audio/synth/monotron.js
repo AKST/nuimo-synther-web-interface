@@ -35,13 +35,21 @@ export default class Monotron {
 
   setLFOTarget (target) {
     this.lfoGain.disconnect();
+    console.log(target);
     switch (target) {
       case 'pitch':
         this.lfoGain.connect(this.osc.frequency);
         break;
+      case 'q':
+        this.lfoGain.connect(this.filter.Q);
+        break;
       case 'cutoff':
         this.lfoGain.connect(this.filter.frequency);
         break;
+      case 'none':
+        break;
+      default:
+        throw new Error('unknown lfo target');
     }
   }
 
